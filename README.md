@@ -1,0 +1,2 @@
+# Reconhecimento Optico de Gabaritos
+ 
