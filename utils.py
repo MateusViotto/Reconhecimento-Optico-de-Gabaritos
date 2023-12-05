@@ -2,6 +2,30 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+def mostrar_imagem(img):
+    # Exiba a imagem usando matplotlib
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    plt.imshow(img_rgb)
+    plt.axis('off')  # Desliga os eixos
+    plt.show()
+
+#==========================Utils======================================
+def binarizar(img):
+    # Define um limiar para a binarização (no caso, 128)
+    limiar, imagem_binarizada = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY)
+    # Chama a função mostrar_imagem para exibir a imagem binarizada
+    mostrar_imagem(imagem_binarizada)
+    # Retorna a imagem binarizada
+    return imagem_binarizada
+
+def inverter_imagem(img):
+    # Utiliza a função cv2.bitwise_not para inverter os valores dos pixels na imagem
+    img = cv2.bitwise_not(img)
+    # Chama a função mostrar_imagem para exibir a imagem invertida
+    mostrar_imagem(img)
+    # Retorna a imagem invertida
+    return img
+
 def separar_por_linhas_horizontais(imagem, altura_minima):
     # Converte a imagem para escala de cinza
     cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
@@ -49,12 +73,6 @@ def separar_por_linhas_horizontais(imagem, altura_minima):
     # Retorna a lista de imagens separadas
     return imagens_separadas
 
-def mostrar_imagem(img):
-    # Exiba a imagem usando matplotlib
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    plt.imshow(img_rgb)
-    plt.axis('off')  # Desliga os eixos
-    plt.show()
 
 # Função para separar as alternativas em cada parte da imagem
 def separar_alternativas(img):
@@ -65,7 +83,7 @@ def separar_alternativas(img):
     return boxes
 
 
-def separar_boxes(partes_da_imagem):
+def separar_boxes(partes_da_imagem, questoes, escolhas):
   # Array para armazenar os valores de pixels
   valorPixels = np.zeros((questoes, escolhas))
 
@@ -103,19 +121,3 @@ def armazenar_indices(valorPixels, questoes):
       maioresIndices = np.where(arr == np.amax(arr))
       indices.append(maioresIndices[0][0])
   return indices
-
-def binarizar(img):
-    # Define um limiar para a binarização (no caso, 128)
-    limiar, imagem_binarizada = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY)
-    # Chama a função mostrar_imagem para exibir a imagem binarizada
-    mostrar_imagem(imagem_binarizada)
-    # Retorna a imagem binarizada
-    return imagem_binarizada
-
-def inverter_imagem(img):
-    # Utiliza a função cv2.bitwise_not para inverter os valores dos pixels na imagem
-    img = cv2.bitwise_not(img)
-    # Chama a função mostrar_imagem para exibir a imagem invertida
-    mostrar_imagem(img)
-    # Retorna a imagem invertida
-    return img

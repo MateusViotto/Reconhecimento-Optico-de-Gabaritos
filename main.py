@@ -1,7 +1,6 @@
 import cv2
 import utils
 
-
 # Carrega a imagem
 imagem = cv2.imread('Imagens/imagem2.jpg')
 gabarito = cv2.imread('Imagens/gabarito.jpg')
@@ -40,9 +39,9 @@ partes_da_imagem = utils.separar_por_linhas_horizontais(imagem_invertida, altura
 #Separar as boxes
 print('Separando as partes por boxes. . .')
 print('Gabarito:')
-valorPixels_gabarito = utils.separar_boxes(partes_da_imagem_gabarito)
+valorPixels_gabarito = utils.separar_boxes(partes_da_imagem_gabarito, questoes, escolhas)
 print('Prova do aluno:')
-valorPixels = utils.separar_boxes(partes_da_imagem)
+valorPixels = utils.separar_boxes(partes_da_imagem, questoes, escolhas)
 
 #Separar indices
 print('Conferindo os índices. . .\n')
