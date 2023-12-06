@@ -11,8 +11,10 @@ def mostrar_imagem(img):
 
 #==========================Utils======================================
 def binarizar(img):
+    # Converte a imagem para escala de cinza
+    cinza = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Define um limiar para a binarização (no caso, 128)
-    limiar, imagem_binarizada = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY)
+    limiar, imagem_binarizada = cv2.threshold(cinza, 128, 255, cv2.THRESH_BINARY)
     # Chama a função mostrar_imagem para exibir a imagem binarizada
     mostrar_imagem(imagem_binarizada)
     # Retorna a imagem binarizada
@@ -27,11 +29,9 @@ def inverter_imagem(img):
     return img
 
 def separar_por_linhas_horizontais(imagem, altura_minima):
-    # Converte a imagem para escala de cinza
-    cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
 
     # Aplica um desfoque para reduzir o ruído
-    cinza = cv2.GaussianBlur(cinza, (5, 5), 0)
+    cinza = cv2.GaussianBlur(imagem, (5, 5), 0)
 
     # Detecta bordas na imagem
     bordas = cv2.Canny(cinza, 50, 150)
@@ -96,10 +96,8 @@ def separar_boxes(partes_da_imagem, questoes, escolhas):
       boxes = separar_alternativas(parte)
       # Loop para percorrer cada caixa (alternativa)
       for im in boxes:
-          # Converte a caixa para escala de cinza
-          cinza = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
           # Conta o número de pixels não pretos na caixa
-          totalPixels = cv2.countNonZero(cinza)
+          totalPixels = cv2.countNonZero(im)
           # Armazena o número de pixels na matriz myPixelVal
           valorPixels[countR][countC] = totalPixels
           countC += 1
